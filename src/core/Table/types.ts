@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, Dispatch } from 'react';
 
 type TSortingDir = 'asc' | 'desc';
 
@@ -42,6 +42,8 @@ export type TTableAction =
     type: EActionType.CHANGE_SETTINGS_OPENED;
     payload: boolean;
   }
+
+export type TTableDispatch = Dispatch<TTableAction>;
 
 export type TTableActions = {
   changeSettingsOpened(arg0: boolean): void;

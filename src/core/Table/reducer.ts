@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { TTableState } from './consts';
 import { TTableAction, EActionType } from './types';
 
@@ -8,8 +9,14 @@ const reducers = {
   }),
 };
 
-export const tableReducer = (state: TTableState, action: TTableAction) => {
-  const reducer = reducers[action.type];
+export const useTableReducer = () => {
+  return useCallback((state: TTableState, action: TTableAction) => {
+    const reducer = reducers[action.type];
 
-  return reducer(state, action);
+    if (!reducer) {
+      return state;
+    }
+
+    return reducer(state, action);
+  }, []);
 };

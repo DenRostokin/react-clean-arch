@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
-import { TableContext, useLocalStateTable } from 'core/Table';
+import { TableContext, useLocalTable } from 'core/Table';
 
 import ContractsTabRelation from './ContractsTabRelation';
 
 const ContractsTabProvider: FC = () => {
-  const table = useLocalStateTable();
+  const table = useLocalTable();
 
   return (
     <TableContext.Provider value={table}>

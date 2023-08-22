@@ -4,10 +4,11 @@ import { TRegistryEmitter } from 'utils/useRegistry';
 import { useEntity } from 'utils/useEntity';
 // import { ApiServiceContext } from 'utils/useApiService';
 
-import { TTableRegistry, EActionType, TTableActions, TStateAdapter } from './types';
+import { TTableRegistry, TTableActions, TStateAdapter } from './types';
 import { TABLE_INITIAL_STATE } from './consts';
-import { tableReducer } from './reducer';
-import * as commonSelectors from './selectors';
+import { useTableReducer } from './reducer';
+import { useTableSelectors } from './selectors';
+import { useTableActions } from './actions';
 
 const useSettingsOpener = ({ actions, emit }: {
   actions: TTableActions;
@@ -28,31 +29,19 @@ const useSettingsOpener = ({ actions, emit }: {
 //   }, [apiService]);
 // };
 
-const useLocalStateAdapter = (): TStateAdapter => {
+const useLocalAdapter = (): TStateAdapter => {
+  const tableReducer = useTableReducer();
   const [state, dispatch] = useReducer(tableReducer, TABLE_INITIAL_STATE);
-
-  const selectSettingsOpened = useCallback(() => {
-    return commonSelectors.selectSettingsOpened(state);
-  }, [state]);
-
-  const changeSettingsOpened = useCallback((value: boolean) => {
-    dispatch({
-      type: EActionType.CHANGE_SETTINGS_OPENED,
-      payload: value
-    });
-  }, [dispatch]);
+  const selectors = useTableSelectors(state);
+  const actions = useTableActions(dispatch, selectors);
 
   return useMemo(() => ({
-    actions: {
-      changeSettingsOpened
-    },
-    selectors: {
-      selectSettingsOpened
-    }
-  }), [changeSettingsOpened, selectSettingsOpened]);
+    actions,
+    selectors,
+  }), [actions, selectors]);
 };
 //
-// const useStoreActionsWithSelectors = () => {
+// const useExternalAdapter = () => {
 //
 // };
 
@@ -68,10 +57,14 @@ const useTable = ({ actions, selectors }: TStateAdapter) => {
   }), [openSettings, selectors]); // eslint-disable-line
 };
 
-export const useLocalStateTable = () => {
-  const stateAdapter = useLocalStateAdapter();
+export const useLocalTable = () => {
+  const stateAdapter = useLocalAdapter();
 
   return useTable(stateAdapter);
 };
+
+// export const useExternalTable = () => {
+//
+// };
 
 export type TTable = ReturnType<typeof useTable>;
