@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import noop from 'lodash/noop';
 
 import { useRegistry, useRegistryEmitter, useRegistrySubscriber, TRegistryType, TRegistrySubscriber } from './useRegistry';
 
@@ -25,4 +26,10 @@ export const useEntity = <R extends TRegistryType,>() => {
     emit,
     useRenderingSubscribe,
   }), [subscribe, emit, useRenderingSubscribe]);
-}
+};
+
+export const DEFAULT_ENTITY_CONTEXT = {
+  subscribe: () => noop,
+  useRenderingSubscribe: noop,
+  emit: noop,
+};

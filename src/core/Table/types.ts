@@ -1,5 +1,9 @@
 import { ReactElement, Dispatch } from 'react';
 
+// import { TApiService } from 'utils/useApiService';
+
+import { TTableState } from './consts';
+
 type TSortingDir = 'asc' | 'desc';
 
 export interface ISortingValue {
@@ -34,10 +38,15 @@ export interface IUseTablePayload<T extends TTableData> {
 }
 
 export const enum EActionType {
+  SET_STATE = 'setState',
   CHANGE_SETTINGS_OPENED = 'changeSettingsOpened'
 }
 
 export type TTableAction = 
+  | {
+    type: EActionType.SET_STATE,
+    payload: TTableState
+  }
   | {
     type: EActionType.CHANGE_SETTINGS_OPENED;
     payload: boolean;
@@ -50,10 +59,12 @@ export type TTableActions = {
 }
 
 export type TTableSelectors = {
+  selectState(): TTableState;
   selectSettingsOpened(): boolean;
 }
 
 export type TStateAdapter = {
-  actions: TTableActions,
-  selectors: TTableSelectors
+  actions: TTableActions;
+  selectors: TTableSelectors;
+  // apiService: TApiService;
 }

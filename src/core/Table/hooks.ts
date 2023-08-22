@@ -1,11 +1,12 @@
-import { useCallback, useMemo, useReducer } from 'react';
+import { useCallback, useMemo, useReducer, useEffect } from 'react';
 
 import { TRegistryEmitter } from 'utils/useRegistry';
 import { useEntity } from 'utils/useEntity';
+import { useFirstRender } from 'utils/useFirstRender';
 // import { ApiServiceContext } from 'utils/useApiService';
 
-import { TTableRegistry, TTableActions, TStateAdapter } from './types';
-import { TABLE_INITIAL_STATE } from './consts';
+import { TTableRegistry, TTableActions, TStateAdapter, EActionType } from './types';
+import { TABLE_INITIAL_STATE, TTableState } from './consts';
 import { useTableReducer } from './reducer';
 import { useTableSelectors } from './selectors';
 import { useTableActions } from './actions';
@@ -29,23 +30,29 @@ const useSettingsOpener = ({ actions, emit }: {
 //   }, [apiService]);
 // };
 
-const useLocalAdapter = (): TStateAdapter => {
+const useLocalAdapter = (externalState?: TTableState, deps = []): TStateAdapter => {
+  const isFirstRender = useFirstRender();
   const tableReducer = useTableReducer();
-  const [state, dispatch] = useReducer(tableReducer, TABLE_INITIAL_STATE);
+  const [state, dispatch] = useReducer(tableReducer, externalState || TABLE_INITIAL_STATE);
   const selectors = useTableSelectors(state);
   const actions = useTableActions(dispatch, selectors);
+
+  useEffect(() => {
+    if (externalState && !isFirstRender.current) {
+      dispatch({
+        type: EActionType.SET_STATE,
+        payload: externalState
+      });
+    }
+  }, [deps]); // eslint-disable-line
 
   return useMemo(() => ({
     actions,
     selectors,
   }), [actions, selectors]);
 };
-//
-// const useExternalAdapter = () => {
-//
-// };
 
-const useTable = ({ actions, selectors }: TStateAdapter) => {
+export const useTable = ({ actions, selectors }: TStateAdapter) => {
   const { emit, ...entity } = useEntity<TTableRegistry>();
   const openSettings = useSettingsOpener({ actions, emit });
 
@@ -57,14 +64,11 @@ const useTable = ({ actions, selectors }: TStateAdapter) => {
   }), [openSettings, selectors]); // eslint-disable-line
 };
 
-export const useLocalTable = () => {
-  const stateAdapter = useLocalAdapter();
+export type TTable = ReturnType<typeof useTable>;
+
+export const useLocalTable = (externalTable?: TTable, deps = []) => {
+  const externalState = externalTable?.selectState();
+  const stateAdapter = useLocalAdapter(externalState, deps);
 
   return useTable(stateAdapter);
 };
-
-// export const useExternalTable = () => {
-//
-// };
-
-export type TTable = ReturnType<typeof useTable>;
