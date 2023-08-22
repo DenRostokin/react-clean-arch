@@ -8,6 +8,6 @@ export const useApiService = () => {
 
 const defaultApiService = async () => {};
 
-export const ApiServiceContext = createContext<ReturnType<typeof useApiService>>(defaultApiService);
+export type TApiService = ReturnType<typeof useApiService>;
 
-export type TApiService = () => Promise<{}>;
+export const ApiServiceContext = createContext<TApiService>(defaultApiService);

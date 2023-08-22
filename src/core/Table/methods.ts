@@ -19,6 +19,8 @@ export const useTableMethods = (methodParams: TTableMethodParams) => {
   }), [openSettings]);
 };
 
-export const DEFAULT_METHODS_CONTEXT = {
+export type TTableMethods = ReturnType<typeof useTableMethods>;
+
+export const DEFAULT_METHODS_CONTEXT: TTableMethods = {
   openSettings: noop,
 };

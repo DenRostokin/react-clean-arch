@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 import { DEFAULT_ENTITY_CONTEXT } from 'utils/useEntity';
 
-import { TTable } from './hooks';
+import { TTable } from './entity';
 import { DEFAULT_SELECTORS_CONTEXT } from './selectors';
 import { DEFAULT_METHODS_CONTEXT } from './methods';
 

@@ -1,4 +1,4 @@
-export { useLocalTable, useTable } from './hooks';
-export type { TTable } from './hooks';
+export { useLocalTable, useTable } from './entity';
+export type { TTable } from './entity';
 export type { ITableColumn } from './types';
 export { default as TableContext } from './context';
