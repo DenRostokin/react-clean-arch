@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { TTableState } from './consts';
-import { TTableAction, EActionType } from './types';
+import { TTableStateActions, EActionType } from './types';
 
 export const useTableReducer = () => {
-  return useCallback((state: TTableState, action: TTableAction) => {
+  return useCallback((state: TTableState, action: TTableStateActions) => {
     switch (action.type) {
       case EActionType.SET_STATE: {
         return action.payload;

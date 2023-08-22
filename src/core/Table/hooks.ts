@@ -1,34 +1,14 @@
-import { useCallback, useMemo, useReducer, useEffect } from 'react';
+import { useMemo, useReducer, useEffect } from 'react';
 
-import { TRegistryEmitter } from 'utils/useRegistry';
 import { useEntity } from 'utils/useEntity';
 import { useFirstRender } from 'utils/useFirstRender';
-// import { ApiServiceContext } from 'utils/useApiService';
 
-import { TTableRegistry, TTableActions, TStateAdapter, EActionType } from './types';
+import { TTableRegistry, TStateAdapter, EActionType } from './types';
 import { TABLE_INITIAL_STATE, TTableState } from './consts';
 import { useTableReducer } from './reducer';
 import { useTableSelectors } from './selectors';
 import { useTableActions } from './actions';
-
-const useSettingsOpener = ({ actions, emit }: {
-  actions: TTableActions;
-  emit: TRegistryEmitter<TTableRegistry>;
-}) => {
-  return useCallback((value: boolean) => {
-    actions.changeSettingsOpened(value);
-
-    emit('openSettings', value);
-  }, [emit, actions]);
-};
-
-// const useTableDataFetcher = () => {
-//   const apiService = useContext(ApiServiceContext);
-//
-//   return useCallback(() => {
-//     return apiService();
-//   }, [apiService]);
-// };
+import { useTableMethods } from './methods';
 
 const useLocalAdapter = (externalState?: TTableState, deps = []): TStateAdapter => {
   const isFirstRender = useFirstRender();
@@ -52,16 +32,18 @@ const useLocalAdapter = (externalState?: TTableState, deps = []): TStateAdapter 
   }), [actions, selectors]);
 };
 
-export const useTable = ({ actions, selectors }: TStateAdapter) => {
-  const { emit, ...entity } = useEntity<TTableRegistry>();
-  const openSettings = useSettingsOpener({ actions, emit });
+export const useTable = (stateAdapter: TStateAdapter) => {
+  const entity = useEntity<TTableRegistry>();
+  const methods = useTableMethods({
+    ...stateAdapter,
+    ...entity
+  });
 
   return useMemo(() => ({
-    openSettings,
-    emit,
+    ...methods,
     ...entity,
-    ...selectors,
-  }), [openSettings, selectors]); // eslint-disable-line
+    ...stateAdapter.selectors,
+  }), [stateAdapter.selectors, entity, methods]);
 };
 
 export type TTable = ReturnType<typeof useTable>;

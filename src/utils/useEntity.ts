@@ -28,6 +28,8 @@ export const useEntity = <R extends TRegistryType,>() => {
   }), [subscribe, emit, useRenderingSubscribe]);
 };
 
+export type TEntityType<R extends TRegistryType> = ReturnType<typeof useEntity<R>>;
+
 export const DEFAULT_ENTITY_CONTEXT = {
   subscribe: () => noop,
   useRenderingSubscribe: noop,

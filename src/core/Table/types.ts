@@ -1,6 +1,7 @@
 import { ReactElement, Dispatch } from 'react';
 
 // import { TApiService } from 'utils/useApiService';
+import { TEntityType } from 'utils/useEntity';
 
 import { TTableState } from './consts';
 
@@ -42,7 +43,7 @@ export const enum EActionType {
   CHANGE_SETTINGS_OPENED = 'changeSettingsOpened'
 }
 
-export type TTableAction = 
+export type TTableStateActions = 
   | {
     type: EActionType.SET_STATE,
     payload: TTableState
@@ -52,7 +53,7 @@ export type TTableAction =
     payload: boolean;
   }
 
-export type TTableDispatch = Dispatch<TTableAction>;
+export type TTableDispatch = Dispatch<TTableStateActions>;
 
 export type TTableActions = {
   changeSettingsOpened(arg0: boolean): void;
@@ -68,3 +69,5 @@ export type TStateAdapter = {
   selectors: TTableSelectors;
   // apiService: TApiService;
 }
+
+export type TTableMethodParams = TStateAdapter & TEntityType<TTableRegistry>;
