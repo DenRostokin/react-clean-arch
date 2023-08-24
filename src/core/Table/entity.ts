@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 
-import { useEntity } from 'utils/useEntity';
+import { useEmitter } from 'utils/useEmitter';
 
 import { TTableRegistry, TStateAdapter } from './types';
 import { useTableMethods } from './methods';
 import { useLocalAdapter } from './adapters';
 
 export const useTable = (stateAdapter: TStateAdapter) => {
-  const entity = useEntity<TTableRegistry>();
+  const entity = useEmitter<TTableRegistry>();
   const methods = useTableMethods({
     ...stateAdapter,
     ...entity

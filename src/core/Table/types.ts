@@ -1,7 +1,7 @@
 import { ReactElement, Dispatch } from 'react';
 
 // import { TApiService } from 'utils/useApiService';
-import { TEntityType } from 'utils/useEntity';
+import { TEmitterType } from 'utils/useEmitter';
 
 import { TTableState } from './consts';
 
@@ -70,4 +70,4 @@ export type TStateAdapter = {
   // apiService: TApiService;
 }
 
-export type TTableMethodParams = TStateAdapter & TEntityType<TTableRegistry>;
+export type TTableMethodParams = TStateAdapter & TEmitterType<TTableRegistry>;

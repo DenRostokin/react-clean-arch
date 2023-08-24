@@ -1,4 +1,4 @@
-import { useEntity } from './useEntity';
+import { useEmitter } from './useEmitter';
 import { TRegistryType } from './useRegistry';
 
 export type TDataFetchingEntityParams = {
