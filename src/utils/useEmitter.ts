@@ -3,7 +3,7 @@ import noop from 'lodash/noop';
 
 import { useRegistry, useRegistryEmitter, useRegistrySubscriber, TRegistryType, TRegistrySubscriber } from './useRegistry';
 
-const useRenderingSubscriptionrHook = <R extends TRegistryType,>(subscribe: TRegistrySubscriber<R>) => {
+const useRenderingSubscriptionHook = <R extends TRegistryType,>(subscribe: TRegistrySubscriber<R>) => {
   const useRenderingSubscription = (...args: Parameters<TRegistrySubscriber<R>>) => {
     const unsubscribe = useMemo(() => {
       return subscribe(...args);
@@ -19,7 +19,7 @@ export const useEmitter = <R extends TRegistryType,>() => {
   const registry = useRegistry<R>();
   const subscribe = useRegistrySubscriber(registry);
   const emit = useRegistryEmitter(registry);
-  const useRenderingSubscription = useRenderingSubscriptionrHook(subscribe);
+  const useRenderingSubscription = useRenderingSubscriptionHook(subscribe);
 
   return useMemo(() => ({
     subscribe,

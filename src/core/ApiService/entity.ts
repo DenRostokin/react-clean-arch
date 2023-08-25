@@ -21,7 +21,7 @@ export const useApiService = (externalTransport?: TApiTransport) => {
     emitter.emit('requestInProgress', params);
 
     try {
-      const response = await transport.connect<R>(params);
+      const response = await transport.connect<R, P>(params);
 
       emitter.emit('requestSuccessed', params, response);
 

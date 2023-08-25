@@ -14,11 +14,11 @@ export type TApiServiceResponse<R = any> = {
 }
 
 export type TApiServiceRequestDescriptor<R> = TApiServiceResponse<R> & {
-  subscribe: (arg0: string, arg1: Function) => () => void;
+  subscribe: (arg0: string, arg1: TBaseHandler) => () => void;
   emit: (arg0: string, arg1: any) => void;
 };
 
-export type TApiTransportConnector = <R>(arg0: TApiServiceRequestParams) => Promise<TApiServiceRequestDescriptor<R>>;
+export type TApiTransportConnector = <R, P extends TApiServiceRequestParams>(arg0: P) => Promise<TApiServiceRequestDescriptor<R>>;
 
 export type TApiTransport = {
   connect: TApiTransportConnector;

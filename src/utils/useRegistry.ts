@@ -1,8 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react';
 
-// "any" usage explanation: Typescript's Parameters utility doesn't work with the "Function" type, only works with the type which described below
-type THandlerType = (...args: any) => any;
-export type TRegistryType = Record<string, THandlerType>;
+export type TRegistryType = Record<string, TBaseHandler>;
 
 export interface IRegistry<R extends TRegistryType> {
   get<T extends keyof R>(arg0: T): R[T][];
