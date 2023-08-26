@@ -1,17 +1,8 @@
 import { createContext } from 'react';
 
-import { DEFAULT_EMITTER_CONTEXT } from 'utils/useEmitter';
-
 import { TTable } from './entity';
-import { DEFAULT_SELECTORS_CONTEXT } from './selectors';
-import { DEFAULT_METHODS_CONTEXT } from './methods';
+import { DEFAULT_TABLE_CONTEXT } from './consts';
 
-const defaultTable: TTable = {
-  ...DEFAULT_EMITTER_CONTEXT,
-  ...DEFAULT_SELECTORS_CONTEXT,
-  ...DEFAULT_METHODS_CONTEXT,
-};
-
-const TableContext = createContext<TTable>(defaultTable);
+const TableContext = createContext<TTable<never>>(DEFAULT_TABLE_CONTEXT);
 
 export default TableContext;

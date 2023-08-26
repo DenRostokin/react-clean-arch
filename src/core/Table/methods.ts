@@ -1,26 +1,36 @@
-import { useCallback, useMemo } from 'react';
-import noop from 'lodash/noop';
+import { TEmitterType } from 'utils/useEmitter';
 
-import { TTableMethodParams } from './types';
+import { TTableAdapter } from './adapters';
+import { TTableRegistry, TTableHiddenColumns } from './types';
 
-const useSettingsOpener = ({ actions, emit }: TTableMethodParams) => {
-  return useCallback((value: boolean) => {
-    actions.changeSettingsOpened(value);
+export type TTableMethodsParams<D extends Record<string, unknown>> = Omit<TTableAdapter<D>, 'selectors'> & Omit<TEmitterType<TTableRegistry<D>>, 'useRenderingSubscription'>;
+
+const getSettingsOpener = <D extends Record<string, unknown>>({ actions, emit }: TTableMethodsParams<D>) => {
+  return (value: boolean) => {
+    actions.setSettingsOpened(value);
 
     emit('openSettings', value);
-  }, [emit, actions]);
+  };
 };
 
-export const useTableMethods = (methodParams: TTableMethodParams) => {
-  const openSettings = useSettingsOpener(methodParams);
+const getHiddenColumnsSetter = <D extends Record<string, unknown>>({ actions, emit }: TTableMethodsParams<D>) => {
+  return (value: TTableHiddenColumns<D>) => {
+    actions.setHiddenColumns(value);
 
-  return useMemo(() => ({
-    openSettings
-  }), [openSettings]);
+    emit('hideColumns', value);
+  };
 };
 
-export type TTableMethods = ReturnType<typeof useTableMethods>;
+export const getTableMethods = <D extends Record<string, unknown>>(params: TTableMethodsParams<D>) => {
+  const openSettings = getSettingsOpener(params);
+  const hideColumns = getHiddenColumnsSetter(params);
 
-export const DEFAULT_METHODS_CONTEXT: TTableMethods = {
-  openSettings: noop,
+  return {
+    setData: params.actions.setData,
+    setColumns: params.actions.setColumns,
+    openSettings,
+    hideColumns,
+  };
 };
+
+export type TTableMethods<D extends Record<string, unknown>> = ReturnType<typeof getTableMethods<D>>;

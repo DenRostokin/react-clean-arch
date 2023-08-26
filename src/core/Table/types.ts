@@ -1,73 +1,50 @@
-import { ReactElement, Dispatch } from 'react';
+import { ReactElement } from 'react';
 
-// import { TApiService } from 'utils/useApiService';
-import { TEmitterType } from 'utils/useEmitter';
-
-import { TTableState } from './consts';
-
-type TSortingDir = 'asc' | 'desc';
-
-export interface ISortingValue {
-  field: string;
-  dir: TSortingDir;
-}
-
-export type TTableData = Record<string, unknown>;
-
-export interface ITableColumn<T extends TTableData = TTableData> {
+export type TTableColumn<T extends Record<string, unknown>> = {
   id: keyof T;
   header: ReactElement | string;
   cell: ((arg: T[keyof T]) => ReactElement) | string;
 }
 
-export type TColumnSortingHandler = (value: ISortingValue) => void;
+export type TTableData<D> = D[]
 
-interface ISettingsChangeParams {
-  visible: ITableColumn[];
-  hidden: ITableColumn[];
-}
+export type TTableColumns<D extends Record<string, unknown>> = TTableColumn<D>[]
 
-export type TTableRegistry = {
-  sortColumn: TColumnSortingHandler;
-  openSettings: (arg0: boolean) => void;
-  changeSettings: (arg0: ISettingsChangeParams) => void;
-};
+export type TTableHiddenColumn<D extends Record<string, unknown>> = keyof D;
 
-export interface IUseTablePayload<T extends TTableData> {
-  data: T[];
-  columns: ITableColumn<T>[];
+export type TTableHiddenColumns<D extends Record<string, unknown>> = TTableHiddenColumn<D>[];
+
+export type TTableState<D extends Record<string, unknown>> = {
+  data: TTableData<D>;
+  columns: TTableColumns<D>;
+  settingsOpened: boolean;
+  hiddenColumns: TTableHiddenColumns<D>;
 }
 
 export const enum EActionType {
   SET_STATE = 'setState',
-  CHANGE_SETTINGS_OPENED = 'changeSettingsOpened'
+  SET_DATA = 'setData',
+  SET_COLUMNS = 'setColumns',
+  SET_SETTINGS_OPENED = 'setSettingsOpened',
+  SET_HIDDEN_COLUMNS = 'setHiddenColumns',
 }
 
-export type TTableStateActions = 
-  | {
-    type: EActionType.SET_STATE,
-    payload: TTableState
-  }
-  | {
-    type: EActionType.CHANGE_SETTINGS_OPENED;
-    payload: boolean;
-  }
-
-export type TTableDispatch = Dispatch<TTableStateActions>;
-
-export type TTableActions = {
-  changeSettingsOpened(arg0: boolean): void;
+export type TActionPayload<D extends Record<string, unknown>> = {
+  [EActionType.SET_STATE]: TTableState<D>;
+  [EActionType.SET_DATA]: TTableData<D>;
+  [EActionType.SET_COLUMNS]: TTableColumns<D>;
+  [EActionType.SET_SETTINGS_OPENED]: boolean;
+  [EActionType.SET_HIDDEN_COLUMNS]: TTableHiddenColumns<D>;
 }
 
-export type TTableSelectors = {
-  selectState(): TTableState;
-  selectSettingsOpened(): boolean;
+export type TTableSelectors<D extends Record<string, unknown>> = {
+  selectData: (state: TTableState<D>) => TTableData<D>;
+  selectColumns: (state: TTableState<D>) => TTableColumns<D>;
+  selectHiddenColumns: (state: TTableState<D>) => TTableHiddenColumns<D>;
+  selectSettingsOpened: (state: TTableState<D>) => boolean;
 }
 
-export type TStateAdapter = {
-  actions: TTableActions;
-  selectors: TTableSelectors;
-  // apiService: TApiService;
+export type TTableRegistry<D extends Record<string, unknown>> = {
+  openSettings: (arg0: boolean) => void;
+  hideColumns: (arg0: TTableHiddenColumns<D>) => void;
 }
-
-export type TTableMethodParams = TStateAdapter & TEmitterType<TTableRegistry>;
