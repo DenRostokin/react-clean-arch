@@ -1,10 +1,15 @@
 export type TApiServiceRequestMethods = 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
 
 export type TApiServiceRequestParams<T extends Record<string, unknown> = Record<string, unknown>> = {
+  /** A request identifier which is used for the request canceling */
   id: symbol;
+  /** A request string with query parameters */
   url: string;
+  /** A request method */
   method: TApiServiceRequestMethods;
+  /** A request body which can be sent for all request methods except the "GET" one */
   body?: T;
+  /** A dictionary of request headers */
   headers?: Record<string, string>;
 }
 
