@@ -1,5 +1,5 @@
 export * from './entity';
-export { default as TableContext } from './context';
+export * from './context';
 export * from './consts';
 export type { TTableAdapter } from './adapters';
 export type { TTableMethods } from './methods';

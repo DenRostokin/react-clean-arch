@@ -1,15 +1,14 @@
-import { FC, useCallback, useContext } from 'react';
-
-import { TableContext } from 'core/Table';
+import { FC, useCallback, useContext, memo } from 'react';
 
 import ContractsTab from './ContractsTab';
+import { ContractsTableContext } from './context';
 
 const ContractsTabRelation: FC = () => {
-  const table = useContext(TableContext);
+  const table = useContext(ContractsTableContext);
 
   return (
     <ContractsTab />
   );
 };
 
-export default ContractsTabRelation;
+export default memo(ContractsTabRelation);

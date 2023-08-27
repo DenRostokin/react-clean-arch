@@ -2,8 +2,6 @@ import noop from 'lodash/noop';
 
 import { DEFAULT_EMITTER_CONTEXT } from 'utils/useEmitter';
 
-import { TTable } from './entity';
-
 export const TABLE_INITIAL_STATE = {
   data: [],
   columns: [],
@@ -25,7 +23,7 @@ export const DEFAULT_METHODS_CONTEXT = {
   hideColumns: noop,
 }
 
-export const DEFAULT_TABLE_CONTEXT: TTable<never> = {
+export const DEFAULT_TABLE_CONTEXT = {
   ...DEFAULT_EMITTER_CONTEXT,
   ...DEFAULT_SELECTORS_CONTEXT,
   ...DEFAULT_METHODS_CONTEXT,

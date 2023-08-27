@@ -6,9 +6,9 @@ import { useFirstRender } from 'utils/useFirstRender';
 import { getTableReducers } from './reducers';
 import { getTableSelectors } from './selectors';
 import { TABLE_INITIAL_STATE } from './consts';
-import { TTableState } from './types';
+import { TTableState, TTableDataExtension } from './types';
 
-export const useLocalAdapter = <D extends Record<string, unknown>>(externalState: Partial<TTableState<D>> = {}, deps = []) => {
+export const useLocalAdapter = <D extends TTableDataExtension>(externalState: Partial<TTableState<D>> = {}, deps = []) => {
   const firstRender = useFirstRender();
   const tableReducers = getTableReducers<D>();
   const tableSelectors = getTableSelectors<D>();
@@ -40,7 +40,7 @@ export const useLocalAdapter = <D extends Record<string, unknown>>(externalState
     if (!firstRender.current) {
       actions.setState(initialState);
     }
-  }, [deps]); // eslint-disable-line
+  }, deps); // eslint-disable-line
 
   return useMemo(() => ({
     actions,
@@ -49,4 +49,4 @@ export const useLocalAdapter = <D extends Record<string, unknown>>(externalState
   }), []); // eslint-disable-line
 };
 
-export type TTableAdapter<D extends Record<string, unknown>> = ReturnType<typeof useLocalAdapter<D>>;
+export type TTableAdapter<D extends TTableDataExtension> = ReturnType<typeof useLocalAdapter<D>>;

@@ -40,7 +40,7 @@ export const useLocalStateAdapter = <D>(externalState?: Partial<TDataFetchingSta
     if (externalState && !isFirstRender.current) {
       actions.setState(initialState);
     }
-  }, [deps]); // eslint-disable-line
+  }, deps); // eslint-disable-line
 
   return useMemo(() => ({
     actions,

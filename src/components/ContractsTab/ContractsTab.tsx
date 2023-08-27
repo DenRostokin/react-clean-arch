@@ -1,10 +1,10 @@
 import { FC, useContext, useCallback } from 'react';
 
-import { TableContext } from 'core/Table';
+import { ContractsTableContext } from './context';
 
 const ContractsTab: FC = () => {
-  const table = useContext(TableContext);
-  const settingsOpened = table.selectSettingsOpened();
+  const table = useContext(ContractsTableContext);
+  const settingsOpened = table.useSettingsOpened();
 
   const openSettings = useCallback(() => {
     table.openSettings(true);

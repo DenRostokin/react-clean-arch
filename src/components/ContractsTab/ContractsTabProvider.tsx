@@ -1,16 +1,18 @@
 import { FC } from 'react';
 
-import { TableContext, useLocalTable } from 'core/Table';
+import { useLocalTable } from 'core/Table';
 
 import ContractsTabRelation from './ContractsTabRelation';
+import { ContractsTableContext } from './context';
+import { TClient } from './types';
 
 const ContractsTabProvider: FC = () => {
-  const table = useLocalTable();
+  const table = useLocalTable<TClient>();
 
   return (
-    <TableContext.Provider value={table}>
+    <ContractsTableContext.Provider value={table}>
       <ContractsTabRelation />
-    </TableContext.Provider>
+    </ContractsTableContext.Provider>
   );
 };
 

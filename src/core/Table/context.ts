@@ -2,7 +2,8 @@ import { createContext } from 'react';
 
 import { TTable } from './entity';
 import { DEFAULT_TABLE_CONTEXT } from './consts';
+import { TTableDataExtension } from './types';
 
-const TableContext = createContext<TTable<never>>(DEFAULT_TABLE_CONTEXT);
-
-export default TableContext;
+export const createTableContext = <D extends TTableDataExtension>() => {
+  return createContext<TTable<D>>(DEFAULT_TABLE_CONTEXT);
+};

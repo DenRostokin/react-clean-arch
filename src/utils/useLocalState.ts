@@ -47,14 +47,14 @@ export const useLocalState = <S extends Record<string, unknown>, P extends Recor
   type TSelector<R> = (arg0: S) => R;
 
   const useSelector = useCallback(function useSelector<R>(selector: TSelector<R>) {
-    const [state, setState] = useState(selector(initialState));
+    const [selectorState, setSelectorState] = useState(selector(state));
 
     useEffect(() => subscribe(
       'changeState',
-      (newState) => setState(selector(newState))
+      (newState) => setSelectorState(selector(newState))
     ), [selector]);
 
-    return state;
+    return selectorState;
   }, []); // eslint-disable-line
 
   const actions = useMemo(() => {

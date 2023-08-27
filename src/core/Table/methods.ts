@@ -1,11 +1,11 @@
 import { TEmitterType } from 'utils/useEmitter';
 
 import { TTableAdapter } from './adapters';
-import { TTableRegistry, TTableHiddenColumns } from './types';
+import { TTableRegistry, TTableHiddenColumns, TTableDataExtension } from './types';
 
-export type TTableMethodsParams<D extends Record<string, unknown>> = Omit<TTableAdapter<D>, 'selectors'> & Omit<TEmitterType<TTableRegistry<D>>, 'useRenderingSubscription'>;
+export type TTableMethodsParams<D extends TTableDataExtension> = Omit<TTableAdapter<D>, 'selectors'> & Omit<TEmitterType<TTableRegistry<D>>, 'useRenderingSubscription'>;
 
-const getSettingsOpener = <D extends Record<string, unknown>>({ actions, emit }: TTableMethodsParams<D>) => {
+const getSettingsOpener = <D extends TTableDataExtension>({ actions, emit }: TTableMethodsParams<D>) => {
   return (value: boolean) => {
     actions.setSettingsOpened(value);
 
@@ -13,7 +13,7 @@ const getSettingsOpener = <D extends Record<string, unknown>>({ actions, emit }:
   };
 };
 
-const getHiddenColumnsSetter = <D extends Record<string, unknown>>({ actions, emit }: TTableMethodsParams<D>) => {
+const getHiddenColumnsSetter = <D extends TTableDataExtension>({ actions, emit }: TTableMethodsParams<D>) => {
   return (value: TTableHiddenColumns<D>) => {
     actions.setHiddenColumns(value);
 
@@ -21,7 +21,7 @@ const getHiddenColumnsSetter = <D extends Record<string, unknown>>({ actions, em
   };
 };
 
-export const getTableMethods = <D extends Record<string, unknown>>(params: TTableMethodsParams<D>) => {
+export const getTableMethods = <D extends TTableDataExtension>(params: TTableMethodsParams<D>) => {
   const openSettings = getSettingsOpener(params);
   const hideColumns = getHiddenColumnsSetter(params);
 
@@ -33,4 +33,4 @@ export const getTableMethods = <D extends Record<string, unknown>>(params: TTabl
   };
 };
 
-export type TTableMethods<D extends Record<string, unknown>> = ReturnType<typeof getTableMethods<D>>;
+export type TTableMethods<D extends TTableDataExtension> = ReturnType<typeof getTableMethods<D>>;

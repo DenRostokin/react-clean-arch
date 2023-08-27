@@ -1,6 +1,6 @@
-import { TTableSelectors } from './types';
+import { TTableSelectors, TTableDataExtension } from './types';
 
-export const getTableSelectors = <D extends Record<string, unknown>>(): TTableSelectors<D> => ({
+export const getTableSelectors = <D extends TTableDataExtension>(): TTableSelectors<D> => ({
   selectData: (state) => state.data,
   selectColumns: (state) => state.columns,
   selectHiddenColumns: (state) => state.hiddenColumns,

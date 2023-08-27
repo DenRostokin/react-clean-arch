@@ -3,9 +3,9 @@ import { useEmitter } from 'utils/useEmitter';
 
 import { TTableAdapter, useLocalAdapter } from './adapters';
 import { getTableMethods } from './methods';
-import { TTableRegistry } from './types';
+import { TTableRegistry, TTableState, TTableDataExtension } from './types';
 
-export const useTable = <D extends Record<string, unknown>>(stateAdapter: TTableAdapter<D>) => {
+export const useTable = <D extends TTableDataExtension>(stateAdapter: TTableAdapter<D>) => {
   const emitter = useEmitter<TTableRegistry<D>>();
   const tableMethods = useMemo(() => getTableMethods({
     ...stateAdapter,
@@ -20,10 +20,9 @@ export const useTable = <D extends Record<string, unknown>>(stateAdapter: TTable
   }), []) // eslint-disable-line
 };
 
-export type TTable<D extends Record<string, unknown>> = ReturnType<typeof useTable<D>>;
+export type TTable<D extends TTableDataExtension> = ReturnType<typeof useTable<D>>;
 
-export const useLocalTable = <D extends Record<string, unknown>>(externalTable?: TTable<D>) => {
-  const externalState = externalTable?.getState();
+export const useLocalTable = <D extends TTableDataExtension>(externalState?: Partial<TTableState<D>>) => {
   const stateAdapter = useLocalAdapter<D>(externalState);
 
   return useTable(stateAdapter);
