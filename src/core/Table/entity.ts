@@ -16,6 +16,7 @@ export const useTable = <D extends TTableDataExtension>(stateAdapter: TTableAdap
     ...emitter,
     ...stateAdapter.selectors,
     ...tableMethods,
+    getState: stateAdapter.getState,
   }), []) // eslint-disable-line
 };
 
