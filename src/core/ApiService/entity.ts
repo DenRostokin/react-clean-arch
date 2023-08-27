@@ -5,14 +5,7 @@ import { useEmitter } from 'utils/useEmitter';
 import { useHttpTransport } from './transports';
 import { TApiTransport, TApiServiceRegistry, TApiServiceRequestParams } from './types';
 
-const useApiTransport = (externalTransport?: TApiTransport) => {
-  const httpTransport = useHttpTransport();
-
-  return externalTransport || httpTransport;
-};
-
-export const useApiService = (externalTransport?: TApiTransport) => {
-  const transport = useApiTransport(externalTransport);
+export const useApiService = (transport: TApiTransport) => {
   const emitter = useEmitter<TApiServiceRegistry>();
 
   // TODO add AbortController method to the ApiService
@@ -40,3 +33,9 @@ export const useApiService = (externalTransport?: TApiTransport) => {
 };
 
 export type TApiService = ReturnType<typeof useApiService>;
+
+export const useHttpService = (): TApiService => {
+  const transport = useHttpTransport();
+
+  return useApiService(transport);
+};
