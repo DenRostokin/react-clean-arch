@@ -49,4 +49,4 @@ export const useTableStateAdapter = <D extends TTableDataExtension>(externalStat
   }), []); // eslint-disable-line
 };
 
-export type TTableStateAdapter<D extends TTableDataExtension> = ReturnType<typeof useTableStateAdapter<D>>;
+export type TTableAdapter<D extends TTableDataExtension> = ReturnType<typeof useTableStateAdapter<D>>;

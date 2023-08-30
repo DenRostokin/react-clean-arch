@@ -1,22 +1,22 @@
 import { useMemo } from 'react';
 import { useEmitter } from 'utils/useEmitter';
 
-import { TTableStateAdapter, useTableStateAdapter } from './adapters';
+import { TTableAdapter, useTableStateAdapter } from './adapters';
 import { getTableMethods } from './methods';
 import { TTableRegistry, TTableState, TTableDataExtension } from './types';
 
-export const useTable = <D extends TTableDataExtension>(stateAdapter: TTableStateAdapter<D>) => {
+export const useTable = <D extends TTableDataExtension>(tableAdapter: TTableAdapter<D>) => {
   const emitter = useEmitter<TTableRegistry<D>>();
   const tableMethods = useMemo(() => getTableMethods({
-    ...stateAdapter,
+    ...tableAdapter,
     ...emitter
   }), []); // eslint-disable-line
 
   return useMemo(() => ({
     ...emitter,
-    ...stateAdapter.selectors,
+    ...tableAdapter.selectors,
     ...tableMethods,
-    getState: stateAdapter.getState,
+    getState: tableAdapter.getState,
   }), []) // eslint-disable-line
 };
 

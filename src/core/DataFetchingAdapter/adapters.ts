@@ -49,4 +49,4 @@ export const useDataFetchingStateAdapter = <D>(externalState?: Partial<TDataFetc
   }), []); // eslint-disable-line
 };
 
-export type TDataFetchingStateAdapter<D> = ReturnType<typeof useDataFetchingStateAdapter<D>>;
+export type TDataFetchingAdapter<D> = ReturnType<typeof useDataFetchingStateAdapter<D>>;

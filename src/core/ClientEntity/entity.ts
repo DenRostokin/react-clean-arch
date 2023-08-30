@@ -1,23 +1,23 @@
 import { useCallback, useMemo } from 'react';
 
-import { useLocalAdapter } from './adapters';
-import { TClientStateAdapter, TClientState } from './types';
+import { useClientStateAdapter } from './adapters';
+import { TClientAdapter, TClientState } from './types';
 
-export const useClient = (stateAdapter: TClientStateAdapter) => {
+export const useClient = (clientAdapter: TClientAdapter) => {
   const getState = useCallback((): TClientState => ({
-    clientList: stateAdapter.clientList.getState(),
-    clientInfo: stateAdapter.clientInfo.getState(),
+    clientList: clientAdapter.clientList.getState(),
+    clientInfo: clientAdapter.clientInfo.getState(),
   }), []); // eslint-disable-line
 
   return useMemo(() => ({
     getState,
-    clientListSelectors: stateAdapter.clientList.selectors,
-    clientInfoSelectors: stateAdapter.clientInfo.selectors,
+    clientListSelectors: clientAdapter.clientList.selectors,
+    clientInfoSelectors: clientAdapter.clientInfo.selectors,
   }), []); // eslint-disable-line
 };
 
 export const useLocalClient = (externalState?: TClientState) => {
-  const localAdapter = useLocalAdapter(externalState);
+  const stateAdapter = useClientStateAdapter(externalState);
 
-  return useClient(localAdapter);
+  return useClient(stateAdapter);
 };

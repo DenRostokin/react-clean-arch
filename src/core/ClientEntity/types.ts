@@ -1,4 +1,4 @@
-import { TDataFetchingState, TDataFetchingStateAdapter } from 'core/DataFetchingAdapter';
+import { TDataFetchingState, TDataFetchingAdapter } from 'core/DataFetchingAdapter';
 
 export type TClientData = {
   id: string;
@@ -11,7 +11,7 @@ export type TClientState = {
   clientInfo: TDataFetchingState<TClientData>;
 }
 
-export type TClientStateAdapter = {
-  clientList: TDataFetchingStateAdapter<TClientData[]>;
-  clientInfo: TDataFetchingStateAdapter<TClientData>;
+export type TClientAdapter = {
+  clientList: TDataFetchingAdapter<TClientData[]>;
+  clientInfo: TDataFetchingAdapter<TClientData>;
 }
