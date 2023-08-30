@@ -1,9 +1,9 @@
 import { TEmitterType } from 'utils/useEmitter';
 
-import { TTableAdapter } from './adapters';
+import { TTableStateAdapter } from './adapters';
 import { TTableRegistry, TTableHiddenColumns, TTableDataExtension } from './types';
 
-export type TTableMethodsParams<D extends TTableDataExtension> = Omit<TTableAdapter<D>, 'selectors'> & Omit<TEmitterType<TTableRegistry<D>>, 'useRenderingSubscription'>;
+export type TTableMethodsParams<D extends TTableDataExtension> = Omit<TTableStateAdapter<D>, 'selectors'> & Omit<TEmitterType<TTableRegistry<D>>, 'useRenderingSubscription'>;
 
 const getSettingsOpener = <D extends TTableDataExtension>({ actions, emit }: TTableMethodsParams<D>) => {
   return (value: boolean) => {

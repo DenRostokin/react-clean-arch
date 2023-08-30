@@ -8,7 +8,7 @@ import { getDataFetchingSelectors } from './selectors';
 import { DATA_FETCHING_INITIAL_STATE } from './consts';
 import { TDataFetchingState } from './types';
 
-export const useDataFetchingLocalAdapter = <D>(externalState?: Partial<TDataFetchingState<D>>, deps = []) => {
+export const useDataFetchingStateAdapter = <D>(externalState?: Partial<TDataFetchingState<D>>, deps = []) => {
   const isFirstRender = useFirstRender();
   const reducers = getDataFetchingReducers<D>();
   const rawSelectors = getDataFetchingSelectors<D>();
@@ -49,4 +49,4 @@ export const useDataFetchingLocalAdapter = <D>(externalState?: Partial<TDataFetc
   }), []); // eslint-disable-line
 };
 
-export type TDataFetchingLocalAdapter<D> = ReturnType<typeof useDataFetchingLocalAdapter<D>>;
+export type TDataFetchingStateAdapter<D> = ReturnType<typeof useDataFetchingStateAdapter<D>>;
