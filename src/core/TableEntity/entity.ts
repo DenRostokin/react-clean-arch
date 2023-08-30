@@ -22,8 +22,8 @@ export const useTable = <D extends TTableDataExtension>(tableAdapter: TTableAdap
 
 export type TTable<D extends TTableDataExtension> = ReturnType<typeof useTable<D>>;
 
-export const useLocalTable = <D extends TTableDataExtension>(externalState?: Partial<TTableState<D>>) => {
-  const stateAdapter = useTableStateAdapter<D>(externalState);
+export const useLocalTable = <D extends TTableDataExtension>(externalState?: Partial<TTableState<D>>, deps = []) => {
+  const stateAdapter = useTableStateAdapter<D>(externalState, deps);
 
   return useTable(stateAdapter);
 };

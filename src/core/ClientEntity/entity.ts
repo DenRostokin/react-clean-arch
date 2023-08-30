@@ -16,8 +16,8 @@ export const useClient = (clientAdapter: TClientAdapter) => {
   }), []); // eslint-disable-line
 };
 
-export const useLocalClient = (externalState?: TClientState) => {
-  const stateAdapter = useClientStateAdapter(externalState);
+export const useLocalClient = (externalState?: TClientState, deps = []) => {
+  const stateAdapter = useClientStateAdapter(externalState, deps);
 
   return useClient(stateAdapter);
 };
