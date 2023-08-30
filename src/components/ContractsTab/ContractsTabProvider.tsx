@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { useLocalTable } from 'core/Table';
+import { useLocalTable } from 'core/TableEntity';
 
 import ContractsTabRelation from './ContractsTabRelation';
 import { ContractsTableContext } from './context';

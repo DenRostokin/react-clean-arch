@@ -1,4 +1,4 @@
-import { createTableContext } from 'core/Table';
+import { createTableContext } from 'core/TableEntity';
 
 import { TClient } from './types';
 

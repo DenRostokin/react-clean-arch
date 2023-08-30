@@ -24,6 +24,8 @@ export type TActionPayload<D> = {
   [EDataFetchingAction.SET_ERROR]: TDataFetchingStateError<Error>;
 }
 
+export type TDataFetchingActions<D> = TStateActions<TActionPayload<D>>;
+
 export type TDataFetchingSelectors<D> = {
   selectState: (state: TDataFetchingState<D>) => TDataFetchingState<D>;
   selectData: (state: TDataFetchingState<D>) => TDataFetchingStateData<D>;
