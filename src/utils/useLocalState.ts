@@ -47,7 +47,7 @@ export const useLocalState = <S extends Record<string, unknown>, P extends Recor
   type TSelector<R> = (arg0: S) => R;
 
   const useSelector = useCallback(function useSelector<R>(selector: TSelector<R>) {
-    const [selectorState, setSelectorState] = useState(selector(state));
+    const [selectorState, setSelectorState] = useState(selector(getState()));
 
     useEffect(() => subscribe(
       'changeState',

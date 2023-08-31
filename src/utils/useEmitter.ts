@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, createContext } from 'react';
 import noop from 'lodash/noop';
 
 import { useRegistry, useRegistryEmitter, useRegistrySubscriber, TRegistryType, TRegistrySubscriber } from './useRegistry';
@@ -35,3 +35,7 @@ export const DEFAULT_EMITTER_CONTEXT = {
   useRenderingSubscription: noop,
   emit: noop,
 };
+
+export const createEmitterContext = <R extends TRegistryType>() => {
+  return createContext<TEmitterType<R>>(DEFAULT_EMITTER_CONTEXT);
+}
