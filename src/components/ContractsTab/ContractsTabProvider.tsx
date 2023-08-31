@@ -1,19 +1,36 @@
 import { FC } from 'react';
 
 import { useLocalTable } from 'core/TableEntity';
+import { useApiService, HttpServiceContext } from 'core/ApiService';
+import { useLocalClient, ClientContext } from 'core/ClientEntity';
 
 import ContractsTabRelation from './ContractsTabRelation';
 import { ContractsTableContext } from './context';
+import { useMokingTransport } from './transports';
 import { TClient } from './types';
 
-const ContractsTabProvider: FC = () => {
+const ContractsTabEntityProvider: FC = () => {
   const table = useLocalTable<TClient>();
+  const client = useLocalClient();
 
   return (
     <ContractsTableContext.Provider value={table}>
-      <ContractsTabRelation />
+      <ClientContext.Provider value={client}>
+        <ContractsTabRelation />
+      </ClientContext.Provider>
     </ContractsTableContext.Provider>
   );
 };
 
-export default ContractsTabProvider;
+const ContractsTabServiceProvider: FC = () => {
+  const mockingTransport = useMokingTransport();
+  const httpService = useApiService(mockingTransport);
+
+  return (
+    <HttpServiceContext.Provider value={httpService}>
+      <ContractsTabEntityProvider />
+    </HttpServiceContext.Provider>
+  )
+};
+
+export default ContractsTabServiceProvider;

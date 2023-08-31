@@ -11,7 +11,7 @@ export type TDataFetchingState<D> = {
 export const enum EDataFetchingAction {
   SET_STATE = 'setState',
   SET_DATA = 'setData',
-  SET_LOADING = 'selLoading',
+  SET_LOADING = 'setLoading',
   SET_INITIALIZED = 'setInitialized',
   SET_ERROR = 'setError'
 };

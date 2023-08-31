@@ -1,53 +1,27 @@
-import { useCallback, useState } from 'react';
-// import { IApiResponseWithId } from '@rgs-core/types';
-// import getOr from 'lodash/fp/getOr';
-// import { ApiException } from 'src/exceptions';
-// import { IApiContent } from 'src/dto';
-//
-// // Typescript can't infer Array from Parameters of typing variable
-// // eslint-disable-next-line
-// type Fetcher<A extends any[]> = (...arg: A) => Promise<IApiResponseWithId<unknown>>;
-//
-// export const useRequest = <T extends Fetcher<Parameters<T>>>(fetcher: T) => {
-//   type TData = Required<Awaited<ReturnType<T>>>;
-//
-//   const [initialized, setInitialized] = useState(false);
-//   const [loading, setLoading] = useState(false);
-//   const [data, setData] = useState<TData['responseBody'] | null>(null);
-//   const [error, setError] = useState<ApiException | null>(null);
-//
-//   const request = useCallback(async (...arg: Parameters<T>) => {
-//     try {
-//       setLoading(true);
-//
-//       const response = await fetcher(...arg);
-//
-//       if (response.ok) {
-//         setData(response?.responseBody || null);
-//         setError(null);
-//       } else {
-//         const errorContent: IApiContent = getOr({}, 'responseBody.response.data', response);
-//         const errorStatus = response.status;
-//
-//         throw new ApiException(errorContent.message || '', {
-//           status: errorStatus,
-//           data: errorContent.data || {},
-//           code: errorContent.code || 0
-//         });
-//       }
-//     } catch (externalError) {
-//       setError(externalError as Error);
-//
-//       throw externalError;
-//     } finally {
-//       setInitialized(true);
-//       setLoading(false);
-//     }
-//   }, [fetcher]);
-//
-//   const clearError = useCallback(() => setError(null), []);
-//
-//   return {
-//     initialized, loading, data, error, request, clearError
-//   };
-// };
+type TActions<R> = {
+  setData: (arg0: R) => void;
+  setLoading: (arg0: boolean) => void;
+  setInitialized: (arg0: boolean) => void;
+  setError: (arg0: Error | null) => void;
+}
+
+type TResponse<F> = F extends () => infer R ? Awaited<R> : never;
+type TRequestParams<F> = F extends (arg0: infer P) => any ? P : never;
+
+export const bindRequestToActions = <F extends TBaseHandler<Promise<any>>, R extends TResponse<F>, P extends TRequestParams<F>>(request: F, actions: TActions<R>) => {
+  return async (params: P) => {
+    actions.setLoading(true);
+
+    try {
+      const response = await request(params);
+
+      actions.setData(response);
+      actions.setError(null);
+    } catch (error) {
+      actions.setError(error as Error);
+    } finally {
+      actions.setInitialized(true);
+      actions.setLoading(false);
+    }
+  };
+};

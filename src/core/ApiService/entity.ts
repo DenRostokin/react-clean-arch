@@ -3,18 +3,18 @@ import { useCallback, useMemo } from 'react';
 import { useEmitter } from 'utils/useEmitter';
 
 import { useHttpTransport } from './transports';
-import { TApiTransport, TApiServiceRegistry, TApiServiceRequestParams } from './types';
+import { TApiTransport, TApiServiceRegistry, TApiServiceRequestParams, TApiServiceBody } from './types';
 
 export const useApiService = (transport: TApiTransport) => {
   const emitter = useEmitter<TApiServiceRegistry>();
 
   // TODO add AbortController method to the ApiService
 
-  const request = useCallback(async <R, P  extends TApiServiceRequestParams>(params: P) => {
+  const request = useCallback(async <R, B extends TApiServiceBody = TApiServiceBody>(params: TApiServiceRequestParams<B>) => {
     emitter.emit('requestInProgress', params);
 
     try {
-      const response = await transport.connect<R, P>(params);
+      const response = await transport.connect<R, B>(params);
 
       emitter.emit('requestSuccessed', params, response);
 

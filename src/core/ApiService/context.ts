@@ -6,7 +6,7 @@ import { DEFAULT_EMITTER_CONTEXT } from 'utils/useEmitter';
 import { TApiService } from './entity';
 
 export const API_SERVICE_REQUEST_DESCRIPTOR = {
-  body: undefined,
+  body: null,
   headers: {},
   subscribe: () => noop,
   emit: noop,
