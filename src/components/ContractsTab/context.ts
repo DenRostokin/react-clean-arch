@@ -1,5 +1,4 @@
 import { createTableContext } from 'core/TableEntity';
+import { TClientData } from 'core/ClientEntity';
 
-import { TClient } from './types';
-
-export const ContractsTableContext = createTableContext<TClient>();
+export const ContractsTableContext = createTableContext<TClientData>();

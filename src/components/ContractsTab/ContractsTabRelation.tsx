@@ -10,7 +10,7 @@ const ContractsTabRelation: FC = () => {
   const client = useContext(ClientContext);
 
   useEffect(() => {
-    client.fetchClientList({});
+    client.fetchClientList();
   }, []); //eslint-disable-line
 
   return (

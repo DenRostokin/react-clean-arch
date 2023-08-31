@@ -2,15 +2,14 @@ import { FC } from 'react';
 
 import { useLocalTable } from 'core/TableEntity';
 import { useApiService, HttpServiceContext } from 'core/ApiService';
-import { useLocalClient, ClientContext } from 'core/ClientEntity';
+import { useLocalClient, ClientContext, TClientData } from 'core/ClientEntity';
 
 import ContractsTabRelation from './ContractsTabRelation';
 import { ContractsTableContext } from './context';
 import { useMokingTransport } from './transports';
-import { TClient } from './types';
 
 const ContractsTabEntityProvider: FC = () => {
-  const table = useLocalTable<TClient>();
+  const table = useLocalTable<TClientData>();
   const client = useLocalClient();
 
   return (
@@ -30,7 +29,7 @@ const ContractsTabServiceProvider: FC = () => {
     <HttpServiceContext.Provider value={httpService}>
       <ContractsTabEntityProvider />
     </HttpServiceContext.Provider>
-  )
+  );
 };
 
 export default ContractsTabServiceProvider;
