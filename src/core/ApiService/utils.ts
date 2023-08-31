@@ -9,7 +9,7 @@ type TResponse<F> = F extends () => infer R ? Awaited<R> : never;
 type TRequestParams<F> = F extends (arg0: infer P) => any ? P : never;
 
 export const bindRequestToActions = <F extends TBaseHandler<Promise<any>>, R extends TResponse<F>, P extends TRequestParams<F>>(request: F, actions: TActions<R>) => {
-  return async (params: P) => {
+  return async (params?: P) => {
     actions.setLoading(true);
 
     try {
