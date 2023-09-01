@@ -5,8 +5,7 @@ import { useApiService, HttpServiceContext } from 'core/ApiService';
 import { useLocalClient, ClientContext, TClientData } from 'core/ClientEntity';
 
 import ContractsTabRelation from './ContractsTabRelation';
-import { ContractsTableContext } from './context';
-import { useMokingTransport } from './transports';
+import { ContractsTableContext, useMokingTransport } from './context';
 
 const ContractsTabEntityProvider: FC = () => {
   const table = useLocalTable<TClientData>();

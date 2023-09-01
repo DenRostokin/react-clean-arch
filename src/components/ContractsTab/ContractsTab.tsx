@@ -18,7 +18,7 @@ const ClientList: FC = () => {
         <li key={name}>{`${name}: ${age}`}</li>
       ))}
     </ul>
-  )
+  );
 }
 
 const ContractsTab: FC = () => {

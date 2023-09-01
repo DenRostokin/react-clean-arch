@@ -1,6 +1,6 @@
-import { bindRequestToActions } from 'core/ApiService';
+import { bindRequestToActions } from 'utils/bindRequestToActions';
 
-import { TClientMethodsParams, TClientData } from './types'
+import { TClientMethodsParams, TClientData } from './types';
 
 const getClientListFetcher = ({ apiService, clientList }: TClientMethodsParams) => {
   const requestId = Symbol('fetchClientList');
