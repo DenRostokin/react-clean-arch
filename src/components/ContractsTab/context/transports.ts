@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import noop from 'lodash/noop';
 
+import { ApiException } from 'exceptions';
 import { TApiTransport, TApiServiceRequestParams } from 'core/ApiService';
 
 import mock from './mock.json';
@@ -28,7 +29,9 @@ export const useMokingTransport = (): TApiTransport => {
       };
     }
 
-    throw new Error('Unknown url or method');
+    throw new ApiException('Unknown url or method', {
+      status: 404
+    });
   }, []);
 
   return useMemo(() => ({

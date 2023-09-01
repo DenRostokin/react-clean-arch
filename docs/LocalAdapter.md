@@ -21,7 +21,7 @@ export type TLocalState<D> = {
     data: D | null;
     initialized: boolean;
     loading: boolean;
-    error: Error | null;
+    error: ApiException | null;
 }
 ```
 2. Создать константу с дефолтным стейтом в файле `consts.ts`

@@ -1,3 +1,6 @@
+import { ApiException } from 'exceptions';
+import { TBaseHandler } from 'types';
+
 export type TApiServiceRequestMethods = 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT';
 
 export type TApiServiceBody = Record<string, unknown>;
@@ -34,5 +37,5 @@ export type TApiTransport = {
 export type TApiServiceRegistry = {
   requestInProgress: (arg0: TApiServiceRequestParams) => void;
   requestSuccessed: (arg0: TApiServiceRequestParams, arg1: TApiServiceResponse) => void;
-  requestFailure: (arg0: TApiServiceRequestParams, arg1: Error) => void;
+  requestFailure: (arg0: TApiServiceRequestParams, arg1: ApiException) => void;
 }

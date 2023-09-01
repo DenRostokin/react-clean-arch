@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useRef } from 'react';
 
+import { TBaseHandler } from 'types';
+
 export type TRegistryType = Record<string, TBaseHandler>;
 
 export interface IRegistry<R extends TRegistryType> {

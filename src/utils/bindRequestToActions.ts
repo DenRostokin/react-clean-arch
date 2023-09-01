@@ -1,8 +1,11 @@
+import { ApiException } from 'exceptions';
+import { TBaseHandler } from 'types';
+
 type TActions<R> = {
   setData: (arg0: R) => void;
   setLoading: (arg0: boolean) => void;
   setInitialized: (arg0: boolean) => void;
-  setError: (arg0: Error | null) => void;
+  setError: (arg0: ApiException | null) => void;
 }
 
 type TResponse<F> = F extends () => infer R ? Awaited<R> : never;
@@ -22,7 +25,7 @@ export const bindRequestToActions = <F extends TBaseHandler<Promise<any>>>(reque
       actions.setData(response);
       actions.setError(null);
     } catch (error) {
-      actions.setError(error as Error);
+      actions.setError(error as ApiException);
     } finally {
       actions.setInitialized(true);
       actions.setLoading(false);
