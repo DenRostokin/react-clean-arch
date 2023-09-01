@@ -1,3 +1,5 @@
+import { TStateReducers } from 'types';
+
 import { EActionType, TActionPayload, TTableState } from './types';
 
 export const getTableReducers = <D extends Record<string, unknown>>(): TStateReducers<TTableState<D>, TActionPayload<D>> => ({
