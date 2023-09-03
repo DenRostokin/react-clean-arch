@@ -1,4 +1,5 @@
 import { useMemo, useCallback } from 'react';
+import { DeepPartial } from '@reduxjs/toolkit';
 
 import { useODataService } from 'shared/model/apiService';
 
@@ -28,7 +29,7 @@ export const useCatalog = (adapter: TCatalogAdapter) => {
 
 export type TCatalog = ReturnType<typeof useCatalog>;
 
-export const useLocalCatalog = (externalState?: Partial<TCatalogState>, deps = []) => {
+export const useLocalCatalog = (externalState?: DeepPartial<TCatalogState>, deps = []) => {
   const stateAdapter = useCatalogStateAdapter(externalState, deps);
 
   return useCatalog(stateAdapter);

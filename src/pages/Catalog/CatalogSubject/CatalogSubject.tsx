@@ -22,7 +22,7 @@ const CatalogSubjectPage: FC = () => {
   }
 
   return (
-    <CatalogSubject catalog={catalog} />
+    <CatalogSubject catalog={catalog} data-theme="dark" />
   );
 };
 

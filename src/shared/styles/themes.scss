@@ -1,0 +1,9 @@
+@use "./colors";
+
+@mixin lukoil-light {
+    --catalog-subject-text-color: #{colors.$indigo-dark-1000};
+}
+
+@mixin lukoil-dark {
+    --catalog-subject-text-color: #{colors.$indigo-dark-600};
+}

@@ -7,7 +7,7 @@ type TCreateFetchingSliceParams<D> = {
   initialState?: Partial<TDataFetchingState<D>>;
 }
 
-export const createFetchingSlice = <D>({
+export const createDataFetchingSlice = <D>({
   name, initialState
 }: TCreateFetchingSliceParams<D>) => {
   const reducers = getDataFetchingStoreReducers<D>();

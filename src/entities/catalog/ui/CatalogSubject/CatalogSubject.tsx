@@ -1,18 +1,20 @@
-import { FC } from 'react';
+import { FC, HTMLProps } from 'react';
 
 import { TCatalog } from 'entities/catalog/model';
 
-type TCatalogSubjectProps = {
+import styles from './styles.module.scss';
+
+type TCatalogSubjectProps = HTMLProps<HTMLDivElement> & {
   catalog: TCatalog;
 }
 
-export const CatalogSubject: FC<TCatalogSubjectProps> = ({ catalog }) => {
+export const CatalogSubject: FC<TCatalogSubjectProps> = ({ catalog, ...props }) => {
   const subjectInfo = catalog.subjectInfoSelectors.useData();
 
   console.log({ subjectInfo });
 
   return (
-    <div>Catalog Subject</div>
+    <div className={styles.description} {...props}>Catalog Subject</div>
   );
 };
 

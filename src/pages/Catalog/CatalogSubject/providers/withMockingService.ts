@@ -12,6 +12,6 @@ mockingServicePayload.set({
 
 export const withMockingService = createMockingServiceProviderHOC({
   Context: ODataServiceContext,
-  waitingMs: 2000,
+  waitingMs: 1000,
   payload: mockingServicePayload
 });
