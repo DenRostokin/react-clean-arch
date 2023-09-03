@@ -38,3 +38,18 @@ export type TDataFetchingSelectors<D> = {
   selectInitialized: (state: TDataFetchingState<D>) => boolean;
   selectError: (state: TDataFetchingState<D>) => TDataFetchingStateError<ApiException>;
 }
+
+export type TDataFetchingSelectorHooks<D> = {
+  useData(): TDataFetchingStateData<D>;
+  useFetchingFlags(): {
+    loading: boolean;
+    initialized: boolean;
+  };
+  useError(): TDataFetchingStateError<ApiException>;
+}
+
+export type TDataFetchingAdapter<D> = {
+  actions: TStateActions<TActionPayload<D>>;
+  selectors: TDataFetchingSelectorHooks<D>;
+  getState(): TDataFetchingState<D>;
+}

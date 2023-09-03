@@ -1,7 +1,7 @@
 @use "./typography";
 @use "./themes";
 
-html[data-brand="lukoil"][data-theme="light"],
+html[data-brand="lukoil"],
 html[data-brand="lukoil"] [data-theme="light"] {
   @include themes.lukoil-light;
 }

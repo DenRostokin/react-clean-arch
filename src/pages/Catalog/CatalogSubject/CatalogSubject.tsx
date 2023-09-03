@@ -2,12 +2,14 @@ import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { CatalogSubject } from 'entities/catalog/ui/CatalogSubject';
-import { useLocalCatalog } from 'entities/catalog/model';
+import { useCatalog } from 'entities/catalog/model';
+import { useCatalogStoreAdapter } from 'app/store';
 
 import { withProviders } from './providers';
 
 const CatalogSubjectPage: FC = () => {
-  const catalog = useLocalCatalog();
+  const catalogStoreAdapter = useCatalogStoreAdapter();
+  const catalog = useCatalog(catalogStoreAdapter);
   const { initialized, loading } = catalog.subjectInfoSelectors.useFetchingFlags();
   const { id: catalogId } = useParams();
 
