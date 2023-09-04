@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { catalogReducer } from './slices/catalog';
+import { catalogReducer, registerCatalogSelector } from 'entities/catalog/model';
 
 export const store = configureStore({
   reducer: {
@@ -9,3 +9,5 @@ export const store = configureStore({
 });
 
 export type TRootState = ReturnType<typeof store.getState>;
+
+registerCatalogSelector((state: TRootState) => state.catalog);

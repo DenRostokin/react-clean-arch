@@ -3,7 +3,7 @@ import { DeepPartial } from '@reduxjs/toolkit';
 
 import { useODataService } from 'shared/model/apiService';
 
-import { TCatalogAdapter, useCatalogStateAdapter } from './adapters';
+import { TCatalogAdapter, useCatalogStateAdapter, useCatalogStoreAdapter } from './adapters';
 import { getCatalogMethods } from './methods';
 import { TCatalogState, TCatalogGetState } from './types';
 
@@ -33,4 +33,10 @@ export const useLocalCatalog = (externalState?: DeepPartial<TCatalogState>, deps
   const stateAdapter = useCatalogStateAdapter(externalState, deps);
 
   return useCatalog(stateAdapter);
+};
+
+export const useStoreCatalog = () => {
+  const storeAdapter = useCatalogStoreAdapter();
+
+  return useCatalog(storeAdapter);
 };

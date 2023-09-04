@@ -7,7 +7,7 @@ mockingServicePayload.set({
   url: '/catalog/subject/1'
 }, {
   id: '1',
-  info: 'Catalog Subject Info'
+  info: 'Catalog Subject Information'
 });
 
 export const withMockingService = createMockingServiceProviderHOC({
