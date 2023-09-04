@@ -1,4 +1,4 @@
-@use "./colors";
+@use "shared/styles/colors";
 
 @mixin lukoil-light {
     --catalog-subject-text-color: #{colors.$indigo-dark-1000};

@@ -6,15 +6,16 @@ import styles from './styles.module.scss';
 
 type TCatalogSubjectProps = HTMLProps<HTMLDivElement> & {
   catalog: TCatalog;
+  theme?: 'light' | 'dark';
 }
 
-export const CatalogSubject: FC<TCatalogSubjectProps> = ({ catalog, ...props }) => {
+export const CatalogSubject: FC<TCatalogSubjectProps> = ({ catalog, theme, ...props }) => {
   const subjectInfo = catalog.subjectInfoSelectors.useData();
 
   console.log({ subjectInfo });
 
   return (
-    <div className={styles.description} {...props}>Catalog Subject</div>
+    <div className={styles.description} {...props} data-theme={theme}>Catalog Subject</div>
   );
 };
 

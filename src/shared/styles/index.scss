@@ -1,15 +1,4 @@
 @use "./typography";
-@use "./themes";
-
-html[data-brand="lukoil"],
-html[data-brand="lukoil"] [data-theme="light"] {
-  @include themes.lukoil-light;
-}
-
-html[data-brand="lukoil"][data-theme="dark"],
-html[data-brand="lukoil"] [data-theme="dark"] {
-  @include themes.lukoil-dark;
-}
 
 body {
   margin: 0;
