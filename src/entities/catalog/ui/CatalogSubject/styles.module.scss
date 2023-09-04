@@ -1,0 +1,6 @@
+@use "shared/styles/typography";
+
+.description {
+  @include typography.content-large;
+  color: var(--catalog-subject-text-color);
+}

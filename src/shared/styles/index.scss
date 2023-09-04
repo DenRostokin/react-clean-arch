@@ -1,0 +1,35 @@
+@use "./typography";
+@use "./themes";
+
+html[data-brand="lukoil"],
+html[data-brand="lukoil"] [data-theme="light"] {
+  @include themes.lukoil-light;
+}
+
+html[data-brand="lukoil"][data-theme="dark"],
+html[data-brand="lukoil"] [data-theme="dark"] {
+  @include themes.lukoil-dark;
+}
+
+body {
+  margin: 0;
+  font-family: Inter;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+}
+
+button {
+  padding: 0;
+  box-shadow: none;
+  border: none;
+}
+
+h4 {
+  @include typography.header-4;
+}
+
+h6 {
+  @include typography.header-6;
+}
