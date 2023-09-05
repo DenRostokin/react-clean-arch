@@ -12,3 +12,5 @@ export const CATALOG_DEFAULT_CONTEXT: TCatalog = {
   subjectInfoSelectors: DEFAULT_DATA_FETCHING_ADAPTER.selectors,
   fetchSubjectInfo: async () => undefined,
 };
+
+export const SUBJECT_INFO_SLICE_NAME = 'catalogSubjectInfo';

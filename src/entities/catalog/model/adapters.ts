@@ -1,10 +1,9 @@
-import { useMemo, useCallback } from 'react';
-import { useDispatch, useStore } from 'react-redux';
-import { DeepPartial, combineReducers, bindActionCreators, createSelector } from '@reduxjs/toolkit';
+import { useMemo } from 'react';
+import { DeepPartial } from '@reduxjs/toolkit';
 
-import { useDataFetchingStateAdapter, useDataFetchingStoreSelectors, createDataFetchingSlice } from 'shared/model/dataFetchingAdapter';
+import { useDataFetchingStateAdapter, useDataFetchingStoreAdapter } from 'shared/model/dataFetchingAdapter';
 
-import { CatalogRegistry } from './registry';
+import { SUBJECT_INFO_SLICE_NAME } from './consts';
 import { TCatalogState, TCatalogSubjectInfo } from './types';
 
 export const useCatalogStateAdapter = (externalState?: DeepPartial<TCatalogState>, deps = []) => {
@@ -17,32 +16,10 @@ export const useCatalogStateAdapter = (externalState?: DeepPartial<TCatalogState
 
 export type TCatalogAdapter = ReturnType<typeof useCatalogStateAdapter>;
 
-const subjectInfoSlice = createDataFetchingSlice<TCatalogSubjectInfo>({
-  name: 'catalogSubjectInfo'
-});
-
-export const catalogReducer = combineReducers<TCatalogState>({
-  subjectInfo: subjectInfoSlice.reducer,
-});
-
 export const useCatalogStoreAdapter = (): TCatalogAdapter => {
-  const store = useStore();
-  const dispatch = useDispatch();
-  const selectCatalog = CatalogRegistry.getRegistry().catalogSelector;
-
-  // eslint-disable-next-line
-  const selectSubjectInfo = useCallback(createSelector(
-    selectCatalog,
-    state => state.subjectInfo,
-  ), []);
-
-  const subjectInfoSelectors = useDataFetchingStoreSelectors(selectSubjectInfo);
+  const subjectInfo = useDataFetchingStoreAdapter<TCatalogSubjectInfo>(SUBJECT_INFO_SLICE_NAME);
 
   return useMemo(() => ({
-    subjectInfo: {
-      actions: bindActionCreators(subjectInfoSlice.actions, dispatch),
-      selectors: subjectInfoSelectors,
-      getState: () => selectSubjectInfo(store.getState()),
-    }
+    subjectInfo
   }), []) // eslint-disable-line
 };

@@ -1,5 +1,7 @@
+import { CaseReducerActions } from '@reduxjs/toolkit';
+
 import { ApiException } from 'shared/exceptions';
-import { TStateActions } from 'shared/types';
+import { TStateActions, TStoreReducers } from 'shared/types';
 
 export type TDataFetchingStateData<D> = D | null;
 export type TDataFetchingStateError<E> = E | null;
@@ -29,7 +31,9 @@ export type TActionPayload<D> = {
   [EDataFetchingAction.SET_ERROR]: TDataFetchingStateError<ApiException>;
 }
 
-export type TDataFetchingActions<D> = TStateActions<TActionPayload<D>>;
+export type TDataFetchingStateActions<D> = TStateActions<TActionPayload<D>>;
+
+export type TDataFetchingStoreActions<D> = CaseReducerActions<TStoreReducers<TDataFetchingState<D>, TActionPayload<D>>, string>;
 
 export type TDataFetchingSelectors<D> = {
   selectState: (state: TDataFetchingState<D>) => TDataFetchingState<D>;
