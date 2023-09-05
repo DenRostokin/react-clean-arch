@@ -1,4 +1,4 @@
-import { bindRequestToActions } from 'shared/utils/bindRequestToActions';
+import { bindRequestToActions } from 'shared/model/dataFetchingAdapter';
 
 import { TCatalogMethodsParams, TCatalogSubjectInfo } from './types';
 

@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { ApiException } from 'shared/exceptions';
+import { TBaseHandler } from 'shared/types';
+
 import { getDataFetchingStoreReducers } from './reducers';
 import { DATA_FETCHING_INITIAL_STATE } from './consts';
 import { DataFetchingRegistry } from './registry';
-import { TDataFetchingState, TActionPayload } from './types';
-import {TStateActions} from 'shared/types';
+import { TDataFetchingState, TDataFetchingStateActions } from './types';
 
 type TCreateFetchingSliceParams<S, D> = {
   name: string;
@@ -29,7 +31,32 @@ export const createDataFetchingSlice = <S, D>({
 
   registry.registerSelector(name, sliceSelector);
   // TODO figure out how to type store actions to avoid the "as" custing
-  registry.registerActions(name, actions as TStateActions<TActionPayload<D>>);
+  registry.registerActions(name, actions as TDataFetchingStateActions<D>);
 
   return reducer;
+};
+
+type TResponse<F> = F extends () => infer R ? Awaited<R> : never;
+type TRequestParams<F> = F extends () => any 
+  ? void 
+  : F extends (arg0: infer P) => any 
+  ? P 
+  : never;
+
+export const bindRequestToActions = <F extends TBaseHandler<Promise<any>>>(request: F, actions: TDataFetchingStateActions<TResponse<F>>) => {
+  return async (params: TRequestParams<F>) => {
+    actions.setLoading(true);
+
+    try {
+      const response = await request(params);
+
+      actions.setData(response);
+      actions.setError(null);
+    } catch (error) {
+      actions.setError(error as ApiException);
+    } finally {
+      actions.setInitialized(true);
+      actions.setLoading(false);
+    }
+  };
 };
