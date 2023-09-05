@@ -1,10 +1,10 @@
 @use "shared/styles/utils";
 @use "./themes";
 
-@include utils.theme("lukoil", "light") {
+@include utils.brand_theme("lukoil", "light") {
     @include themes.lukoil-light;
 }
 
-@include utils.theme("lukoil", "dark") {
+@include utils.brand_theme("lukoil", "dark") {
     @include themes.lukoil-dark;
 }

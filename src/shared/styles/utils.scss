@@ -1,4 +1,11 @@
-@mixin theme($brand, $theme: false) {
+@mixin theme($theme) {
+    html[data-theme="#{$theme}"],
+    [data-theme="#{$theme}"] {
+        @content;
+    }
+}
+
+@mixin brand_theme($brand, $theme: false) {
     @if $theme {
         html[data-brand="#{$brand}"][data-theme="#{$theme}"],
         html[data-brand="#{$brand}"] [data-theme="#{$theme}"] {
