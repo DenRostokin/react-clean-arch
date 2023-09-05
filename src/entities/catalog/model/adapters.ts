@@ -2,8 +2,7 @@ import { useMemo, useCallback } from 'react';
 import { useDispatch, useStore } from 'react-redux';
 import { DeepPartial, combineReducers, bindActionCreators, createSelector } from '@reduxjs/toolkit';
 
-import { useDataFetchingStateAdapter, useDataFetchingStoreSelectors } from 'shared/model/dataFetchingAdapter';
-import { createDataFetchingSlice } from 'shared/utils/createDataFetchingSlice';
+import { useDataFetchingStateAdapter, useDataFetchingStoreSelectors, createDataFetchingSlice } from 'shared/model/dataFetchingAdapter';
 
 import { CatalogRegistry } from './registry';
 import { TCatalogState, TCatalogSubjectInfo } from './types';

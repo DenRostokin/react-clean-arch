@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { TDataFetchingState, DATA_FETCHING_INITIAL_STATE, getDataFetchingStoreReducers } from 'shared/model/dataFetchingAdapter';
+import { getDataFetchingStoreReducers } from './reducers';
+import { DATA_FETCHING_INITIAL_STATE } from './consts';
+import { TDataFetchingState } from './types';
 
 type TCreateFetchingSliceParams<D> = {
   name: string;
