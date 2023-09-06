@@ -104,6 +104,9 @@ export const useStoreAdapter = <D>(name: string): TAdapter<D> => {
   const registry = Registry.getRegistry();
   const sliceSelector = registry.getSelector<D>(name);
   const rawSelectors = getSelectors<D>();  // созданы на шаге 3
+  
+  const actions = bindActionCreators(registry.getActions<D>(name), dispatch);
+  
   cosnt selectors = useMemo(() => ({
     useData() {
       return useSelector(createSelector(
