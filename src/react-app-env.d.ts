@@ -1,5 +1,4 @@
 /// <reference types="react-scripts" />
-/// <reference types="@reduxjs/toolkit" />
 
 declare module "*.png";
 declare module "*.svg"; 

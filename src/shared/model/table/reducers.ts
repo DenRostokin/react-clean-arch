@@ -3,7 +3,7 @@ import { TStateReducers } from 'shared/types';
 import { EActionType, TActionPayload, TTableState } from './types';
 
 export const getTableReducers = <D extends Record<string, unknown>>(): TStateReducers<TTableState<D>, TActionPayload<D>> => ({
-  [EActionType.SET_STATE]: (state) => state,
+  [EActionType.SET_STATE]: (_, action) => action.payload,
   [EActionType.SET_DATA]: (state, action) => ({
     ...state,
     data: action.payload
