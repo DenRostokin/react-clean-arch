@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import { getCatalogSubject } from 'shared/utils/getRoutes';
+import { getCatalogSubject } from 'shared/utils/routes';
 import { AppLayout, CatalogSubject, NotFound } from 'pages';
 
 const Routing: FC = () => {

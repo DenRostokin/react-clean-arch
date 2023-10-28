@@ -1,4 +1,4 @@
-import { DATA_FETCHING_INITIAL_STATE, DEFAULT_DATA_FETCHING_ADAPTER } from 'shared/model/dataFetchingAdapter';
+import { DATA_FETCHING_INITIAL_STATE, DEFAULT_DATA_FETCHING_ADAPTER } from 'shared/utils/dataFetchingAdapter';
 
 import { TCatalog } from './entity';
 import { TCatalogState } from './types';

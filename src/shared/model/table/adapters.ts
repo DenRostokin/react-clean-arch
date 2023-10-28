@@ -1,7 +1,7 @@
 import { useMemo, useEffect } from 'react';
 
-import { useLocalState } from 'shared/utils/useLocalState';
-import { useFirstRender } from 'shared/utils/useFirstRender';
+import { useLocalState } from 'shared/utils/localState';
+import { useFirstRender } from 'shared/utils/hooks';
 
 import { getTableReducers } from './reducers';
 import { getTableSelectors } from './selectors';

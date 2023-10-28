@@ -1,4 +1,4 @@
-import { TStateReducers } from 'shared/types';
+import { TStateReducers } from 'shared/utils/types';
 
 import { EActionType, TActionPayload, TTableState } from './types';
 

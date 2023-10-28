@@ -1,6 +1,6 @@
 import noop from 'lodash/noop';
 
-import { DEFAULT_EMITTER_CONTEXT } from 'shared/utils/useEmitter';
+import { DEFAULT_EMITTER_CONTEXT } from 'shared/utils/emitter';
 
 export const TABLE_INITIAL_STATE = {
   data: [],

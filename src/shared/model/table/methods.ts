@@ -1,4 +1,4 @@
-import { TEmitterType } from 'shared/utils/useEmitter';
+import { TEmitterType } from 'shared/utils/emitter';
 
 import { TTableAdapter } from './adapters';
 import { TTableRegistry, TTableHiddenColumns, TTableDataExtension } from './types';

@@ -1,4 +1,4 @@
-import { createMockingServiceProviderHOC, ODataServiceContext } from 'shared/model/apiService';
+import { createMockingServiceProviderHOC, ODataServiceContext } from 'shared/utils/apiService';
 
 const mockingServicePayload = new Map();
 

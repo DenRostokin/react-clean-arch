@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-import { createDataFetchingSlice } from 'shared/model/dataFetchingAdapter';
+import { createDataFetchingSlice } from 'shared/utils/dataFetchingAdapter';
 import { SUBJECT_INFO_SLICE_NAME, TCatalogSubjectInfo } from 'entities/catalog/model';
 
 import { TRootState } from './types';

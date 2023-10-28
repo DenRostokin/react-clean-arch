@@ -1,7 +1,7 @@
 import { useMemo, useCallback } from 'react';
 import { DeepPartial } from '@reduxjs/toolkit';
 
-import { useODataService } from 'shared/model/apiService';
+import { useODataService } from 'shared/utils/apiService';
 
 import { TCatalogAdapter, useCatalogStateAdapter, useCatalogStoreAdapter } from './adapters';
 import { getCatalogMethods } from './methods';

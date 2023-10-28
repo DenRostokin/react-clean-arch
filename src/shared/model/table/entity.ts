@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useEmitter } from 'shared/utils/useEmitter';
+import { useEmitter } from 'shared/utils/emitter';
 
 import { TTableAdapter, useTableStateAdapter } from './adapters';
 import { getTableMethods } from './methods';

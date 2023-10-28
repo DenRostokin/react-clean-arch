@@ -1,5 +1,5 @@
-import { TDataFetchingState } from 'shared/model/dataFetchingAdapter';
-import { TApiService } from 'shared/model/apiService';
+import { TDataFetchingState } from 'shared/utils/dataFetchingAdapter';
+import { TApiService } from 'shared/utils/apiService';
 
 import { TCatalogAdapter } from './adapters';
 
