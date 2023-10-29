@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { useLocalState } from 'shared/utils/localState';
 import { TStateReducers } from 'shared/utils/types';
@@ -38,13 +38,19 @@ export const useLocalSlice = <D extends Record<string, unknown>>(initialSlice: D
     }
   });
 
+  const stateSelector = useCallback((state: D) => state, []);
+
   const selectors = useMemo(() => {
-    return Object.keys(initialSlice).reduce((acc, key) => ({
-      ...acc,
-      // eslint-disable-next-line
-      [generateKeyWithPrefix('use', key)]: () => useSelector((state) => state[key]),
-    }), {
-      useState: () => useSelector((state) => state),
+    return Object.keys(initialSlice).reduce((acc, key) => {
+      const selector = (state: D) => state[key];
+
+      return {
+        ...acc,
+        // eslint-disable-next-line
+        [generateKeyWithPrefix('use', key)]: () => useSelector(selector),
+      }
+    }, {
+      useState: () => useSelector(stateSelector),
     } as TSelectorHooks<D>)
   }, []); // eslint-disable-line
 

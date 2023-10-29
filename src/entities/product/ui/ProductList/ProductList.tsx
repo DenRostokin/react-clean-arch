@@ -3,13 +3,30 @@ import { FC } from 'react';
 import { useLocalProduct } from 'entities/product/model/entity';
 
 const ProductList: FC = () => {
-  const product = useLocalProduct();
+  const product = useLocalProduct({
+    productMeta: {
+      filters: {
+        sellers: ['John']
+      }
+    }
+  });
 
   const filters = product.productMeta.selectors.useFilters();
 
+  const handleFiltersChange = () => {
+    product.productMeta.actions.setFilters({
+      ...filters,
+      price: ['1']
+    });
+  };
+
   console.log({ filters });
 
-  return <div>ProductList</div>;
+  return <div>
+    <h1>ProductList</h1>
+
+    <button onClick={handleFiltersChange}>Change Filters</button>
+  </div>;
 }
 
 export default ProductList;

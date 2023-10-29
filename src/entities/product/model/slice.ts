@@ -11,7 +11,10 @@ const useProductSliceUpdate = (productSlice: TProductSlice, externalState: DeepP
 }
 
 export const useLocalProductSlice = (externalState: DeepPartial<TProductState> = {}, deps: any[] = []) => {
-  const productMeta = useLocalSlice(INITIAL_PRODUCT_META_SLICE);
+  const productMeta = useLocalSlice({
+    ...INITIAL_PRODUCT_META_SLICE,
+    ...(externalState?.productMeta || {})
+  });
 
   const productSlice = useMemo(() => ({
     productMeta,
