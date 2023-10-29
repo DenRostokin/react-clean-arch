@@ -21,3 +21,7 @@ export type TStoreReducers<S extends Record<string, unknown>, P extends Record<s
 }
 
 export type TTheme = 'light' | 'dark';
+
+export type DeepPartial<T> = {
+  [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K]
+}
