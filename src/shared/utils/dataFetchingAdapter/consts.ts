@@ -1,5 +1,3 @@
-import { EDataFetchingAction } from './types';
-
 const noop = () => undefined;
 
 export const DATA_FETCHING_INITIAL_STATE = {
@@ -12,12 +10,12 @@ export const DATA_FETCHING_INITIAL_STATE = {
 export const DEFAULT_DATA_FETCHING_ADAPTER = {
   getState: () => DATA_FETCHING_INITIAL_STATE,
   actions: {
-    [EDataFetchingAction.SET_STATE]: noop,
-    [EDataFetchingAction.SET_DATA]: noop,
-    [EDataFetchingAction.SET_LOADING]: noop,
-    [EDataFetchingAction.SET_INITIALIZED]: noop,
-    [EDataFetchingAction.SET_ERROR]: noop,
-    [EDataFetchingAction.CLEAN_STATE]: noop,
+    setState: noop,
+    setData: noop,
+    setLoading: noop,
+    setInitialized: noop,
+    setError: noop,
+    cleanState: noop,
   },
   selectors: {
     useData: () => DATA_FETCHING_INITIAL_STATE.data,

@@ -1,15 +1,9 @@
 import { FC } from 'react';
 
-import { useLocalProduct } from 'entities/product/model/entity';
+import { useStoreProduct } from 'entities/product/model/entity';
 
 const ProductList: FC = () => {
-  const product = useLocalProduct({
-    productMeta: {
-      filters: {
-        sellers: ['John']
-      }
-    }
-  });
+  const product = useStoreProduct('productSlice');
 
   const filters = product.productMeta.selectors.useFilters();
 

@@ -29,14 +29,14 @@ export const useCatalog = (adapter: TCatalogAdapter) => {
 
 export type TCatalog = ReturnType<typeof useCatalog>;
 
-export const useLocalCatalog = (externalState?: DeepPartial<TCatalogState>, deps = []) => {
+export const useLocalCatalog = (externalState?: DeepPartial<TCatalogState>, deps: any[] = []) => {
   const stateAdapter = useCatalogStateAdapter(externalState, deps);
 
   return useCatalog(stateAdapter);
 };
 
-export const useStoreCatalog = () => {
-  const storeAdapter = useCatalogStoreAdapter();
+export const useStoreCatalog = (name: string, externalState?: DeepPartial<TCatalogState>, deps: any[] = []) => {
+  const storeAdapter = useCatalogStoreAdapter(name, externalState, deps);
 
   return useCatalog(storeAdapter);
 };

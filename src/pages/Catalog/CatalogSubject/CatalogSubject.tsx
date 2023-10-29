@@ -7,7 +7,7 @@ import { useStoreCatalog } from 'entities/catalog/model';
 import { withProviders } from './providers';
 
 const CatalogSubjectPage: FC = () => {
-  const catalog = useStoreCatalog();
+  const catalog = useStoreCatalog('catalogSlice');
   const { initialized, loading } = catalog.subjectInfoSelectors.useFetchingFlags();
   const { id: catalogId } = useParams();
 

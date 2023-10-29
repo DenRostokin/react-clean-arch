@@ -1,49 +1,49 @@
-import { createSlice } from '@reduxjs/toolkit';
-
 import { ApiException } from 'shared/utils/exceptions';
-import { TBaseHandler } from 'shared/utils/types';
+import { TBaseHandler, TStateActions } from 'shared/utils/types';
+import { createStoreSlice } from 'shared/utils/slice';
 
-import { getDataFetchingStoreReducers } from './reducers';
 import { DATA_FETCHING_INITIAL_STATE } from './consts';
-import { DataFetchingRegistry } from './registry';
-import { TDataFetchingState, TDataFetchingStateActions } from './types';
+import { TDataFetchingState, TDataFetchingStateData, TDataFetchingStateError } from './types';
 
-type TCreateFetchingSliceParams<S, D> = {
+type TCreateFetchingSliceParams<D> = {
   name: string;
-  sliceSelector: (arg0: S) => TDataFetchingState<D>;
+  sliceSelector: (arg0: any) => TDataFetchingState<D>;
   initialState?: Partial<TDataFetchingState<D>>;
 };
 
-export const createDataFetchingSlice = <S, D>({
+export const createDataFetchingSlice = <D>({
   name,
-  initialState,
   sliceSelector,
-}: TCreateFetchingSliceParams<S, D>) => {
-  const reducers = getDataFetchingStoreReducers<D>();
-  const registry = DataFetchingRegistry.getRegistry<S>();
-
-  const { actions, reducer } = createSlice({
+  initialState,
+}: TCreateFetchingSliceParams<D>) => {
+  return createStoreSlice({
+    name,
     initialState: {
       ...DATA_FETCHING_INITIAL_STATE,
       ...initialState,
     },
-    name,
-    reducers,
+    sliceSelector
   });
-
-  registry.registerSelector(name, sliceSelector);
-  // TODO figure out how to type store actions to avoid the "as" casting
-  registry.registerActions(name, actions as TDataFetchingStateActions<D>);
-
-  return reducer;
 };
 
 type TResponse<F> = F extends (...args: any) => infer R ? Awaited<R> : never;
+
 type TRequestParams<F> = F extends () => any
   ? void
   : F extends (arg0: infer P) => any
   ? P
   : never;
+
+type TActionPayload<D> = {
+  setState: TDataFetchingState<D>;
+  cleanState: void;
+  setData: TDataFetchingStateData<D>;
+  setInitialized: boolean;
+  setLoading: boolean;
+  setError: TDataFetchingStateError<ApiException>;
+};
+
+type TDataFetchingStateActions<D> = TStateActions<TActionPayload<D>>;
 
 export const bindRequestToActions = <F extends TBaseHandler<Promise<any>>>(
   request: F,

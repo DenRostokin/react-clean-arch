@@ -1,26 +1,15 @@
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { useLocalState } from 'shared/utils/localState';
 import { TStateReducers } from 'shared/utils/types';
 
-type TActionPayload<D extends Record<string, unknown>> = {
-  [P in keyof D as `set${Capitalize<string & P>}`]: D[P];
-} & {
-  setState: D;
-  cleanState: void;
-};
+import { useSelectors } from './useSelectors';
+import { generateKeyWithPrefix } from './utils';
+import { TActionPayload } from './types';
 
-type TSelectorHooks<D extends Record<string, unknown>> = {
-  [P in keyof D as `use${Capitalize<string & P>}`]: () => D[P];
-} & {
-  useState: () => D;
-}
-
-const generateKeyWithPrefix = (prefix: string, key: string) => prefix + key.charAt(0).toUpperCase() + key.slice(1);
-
-export const useLocalSlice = <D extends Record<string, unknown>>(initialSlice: D, externalReducers?: TStateReducers<D, TActionPayload<D>>)  => {
+export const useLocalSlice = <D extends Record<string, unknown>>(initialState: D, externalReducers: Partial<TStateReducers<D, TActionPayload<D>>> = {})  => {
   const reducers = useMemo(() => {
-    return Object.keys(initialSlice).reduce((acc, key) => ({
+    return Object.keys(initialState).reduce((acc, key) => ({
       ...acc,
       [generateKeyWithPrefix('set', key)]: (state: D, action: any) => ({
         ...state,
@@ -28,37 +17,25 @@ export const useLocalSlice = <D extends Record<string, unknown>>(initialSlice: D
       })
     }), {
       setState: (_, action) => action.payload,
-      cleanState: () => initialSlice,
+      cleanState: () => initialState,
     } as TStateReducers<D, TActionPayload<D>>)
   }, []); // eslint-disable-line
 
   const { actions, getState, useSelector } = useLocalState({
-    initialState: initialSlice,
+    initialState,
     reducers: {
       ...reducers,
-      ...(externalReducers || {})
+      ...externalReducers,
     }
   });
 
-  const stateSelector = useCallback((state: D) => state, []);
+  const selectors = useSelectors(initialState, useSelector);
 
-  const selectors = useMemo(() => {
-    return Object.keys(initialSlice).reduce((acc, key) => {
-      const selector = (state: D) => state[key];
-
-      return {
-        ...acc,
-        // eslint-disable-next-line
-        [generateKeyWithPrefix('use', key)]: () => useSelector(selector),
-      }
-    }, {
-      useState: () => useSelector(stateSelector),
-    } as TSelectorHooks<D>)
-  }, []); // eslint-disable-line
-
-  return useMemo(() => (
-    { actions, selectors, getState }
-  ), []); // eslint-disable-line
+  return useMemo(() => ({
+    actions,
+    selectors,
+    getState
+  }), []); // eslint-disable-line
 }
 
 export type TSlice<D extends Record<string, unknown>> = ReturnType<typeof useLocalSlice<D>>;
