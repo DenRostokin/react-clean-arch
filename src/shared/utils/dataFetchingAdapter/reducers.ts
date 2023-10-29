@@ -1,4 +1,4 @@
-import { TStateReducers, TStoreReducers } from 'shared/utils/types';
+import { TStoreReducers } from 'shared/utils/types';
 
 import { DATA_FETCHING_INITIAL_STATE } from './consts';
 import {
@@ -6,30 +6,6 @@ import {
   EDataFetchingAction,
   TActionPayload,
 } from './types';
-
-export const getDataFetchingStateReducers = <D>(): TStateReducers<
-  TDataFetchingState<D>,
-  TActionPayload<D>
-> => ({
-  [EDataFetchingAction.SET_STATE]: (_, action) => action.payload,
-  [EDataFetchingAction.CLEAN_STATE]: () => DATA_FETCHING_INITIAL_STATE,
-  [EDataFetchingAction.SET_DATA]: (state, action) => ({
-    ...state,
-    data: action.payload,
-  }),
-  [EDataFetchingAction.SET_INITIALIZED]: (state, action) => ({
-    ...state,
-    initialized: action.payload,
-  }),
-  [EDataFetchingAction.SET_LOADING]: (state, action) => ({
-    ...state,
-    loading: action.payload,
-  }),
-  [EDataFetchingAction.SET_ERROR]: (state, action) => ({
-    ...state,
-    error: action.payload,
-  }),
-});
 
 export const getDataFetchingStoreReducers = <D>(): TStoreReducers<
   TDataFetchingState<D>,

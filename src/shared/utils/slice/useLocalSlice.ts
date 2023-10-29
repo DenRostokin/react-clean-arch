@@ -7,6 +7,7 @@ type TActionPayload<D extends Record<string, unknown>> = {
   [P in keyof D as `set${Capitalize<string & P>}`]: D[P];
 } & {
   setState: D;
+  cleanState: void;
 };
 
 type TSelectorHooks<D extends Record<string, unknown>> = {
@@ -27,6 +28,7 @@ export const useLocalSlice = <D extends Record<string, unknown>>(initialSlice: D
       })
     }), {
       setState: (_, action) => action.payload,
+      cleanState: () => initialSlice,
     } as TStateReducers<D, TActionPayload<D>>)
   }, []); // eslint-disable-line
 

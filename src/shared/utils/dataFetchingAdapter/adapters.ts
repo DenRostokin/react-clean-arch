@@ -1,14 +1,13 @@
-import { useMemo, useEffect, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useDispatch, useStore } from 'react-redux';
 import { bindActionCreators } from '@reduxjs/toolkit';
 
-import { useFirstRender } from 'shared/utils/hooks';
-import { useLocalState } from 'shared/utils/localState';
+import { useLocalSlice, useSliceUpdate } from 'shared/utils/slice';
+import { DeepPartial } from 'shared/utils/types';
 
-import { getDataFetchingStateReducers } from './reducers';
 import {
-  getDataFetchingSelectors,
   useDataFetchingStoreSelectors,
+  useDataFetchingSelectors,
 } from './selectors';
 import { DATA_FETCHING_INITIAL_STATE } from './consts';
 import { DataFetchingRegistry } from './registry';
@@ -18,53 +17,22 @@ export const useDataFetchingStateAdapter = <D>(
   externalState?: Partial<TDataFetchingState<D>>,
   deps = [],
 ): TDataFetchingAdapter<D> => {
-  const isFirstRender = useFirstRender();
-  const reducers = getDataFetchingStateReducers<D>();
-  const rawSelectors = getDataFetchingSelectors<D>();
-  const initialState = {
+  const dataFetchingSlice = useLocalSlice<TDataFetchingState<D>>({
     ...DATA_FETCHING_INITIAL_STATE,
     ...externalState,
-  };
-  const { actions, getState, useSelector } = useLocalState({
-    initialState,
-    reducers,
   });
+  const selectors = useDataFetchingSelectors(dataFetchingSlice);
 
-  const selectors = useMemo(
-    () => ({
-      useData() {
-        return useSelector(rawSelectors.selectData);
-      },
-      useFetchingFlags() {
-        const initialized = useSelector(rawSelectors.selectInitialized);
-        const loading = useSelector(rawSelectors.selectLoading);
-
-        return { initialized, loading };
-      },
-      useError() {
-        return useSelector(rawSelectors.selectError);
-      },
-    }),
-    [], // eslint-disable-line
+  useSliceUpdate(
+    dataFetchingSlice,
+    externalState as DeepPartial<TDataFetchingState<D>>,
+    deps
   );
 
-  useEffect(() => {
-    if (!isFirstRender.current) {
-      actions.setState({
-        ...getState(),
-        ...externalState
-      });
-    }
-  }, deps); // eslint-disable-line
-
-  return useMemo(
-    () => ({
-      actions,
-      selectors,
-      getState,
-    }),
-    [], // eslint-disable-line
-  );
+  return useMemo(() => ({
+    ...dataFetchingSlice,
+    selectors,
+  }), []); // eslint-disable-line
 };
 
 export const useDataFetchingStoreAdapter = <D>(

@@ -2,11 +2,26 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 
+import { TSlice } from 'shared/utils/slice';
+
 import {
   TDataFetchingSelectors,
   TDataFetchingState,
   TDataFetchingSelectorHooks,
 } from './types';
+
+export const useDataFetchingSelectors = <D>(slice: TSlice<TDataFetchingState<D>>) => {
+  return useMemo(() => ({
+    useData: slice.selectors.useData,
+    useError: slice.selectors.useError,
+    useFetchingFlags() {
+      const loading = slice.selectors.useLoading();
+      const initialized = slice.selectors.useInitialized();
+
+      return { loading, initialized };
+    }
+  }), []); // eslint-disable-line
+}
 
 export const getDataFetchingSelectors = <D>(): TDataFetchingSelectors<D> => ({
   selectState: (state) => state,
@@ -21,8 +36,8 @@ type TStoreSelector<S extends Record<string, unknown>, D> = (
 ) => TDataFetchingState<D>;
 
 export const useDataFetchingStoreSelectors = <
-  S extends Record<string, unknown>,
-  D,
+S extends Record<string, unknown>,
+D,
 >(
   storeSelector: TStoreSelector<S, D>,
 ): TDataFetchingSelectorHooks<D> => {
